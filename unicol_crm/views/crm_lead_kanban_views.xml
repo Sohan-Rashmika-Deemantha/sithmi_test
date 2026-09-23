@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_unicol_crm_lead_kanban_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.unicol</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_kanban_card_crm_lead_revenue')]" position="attributes">
+                <attribute name="class">o_kanban_card_crm_lead_revenue d-none</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='user_id'][@widget='many2one_avatar_user']" position="before">
+                <field name="expected_revenue" widget="monetary"
+                       options="{'currency_field': 'company_currency'}"
+                       invisible="not expected_revenue"
+                       class="o_unicol_kanban_revenue_badge"/>
+                <field name="image" widget="image"
+                       invisible="not image"
+                       class="o_unicol_kanban_lead_image rounded"
+                       options="{'size': [24, 24]}"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

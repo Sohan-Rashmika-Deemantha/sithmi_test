@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Email Template to send the Price Estimation to the customer -->
+    <record id="email_template_price_estimation" model="mail.template">
+        <field name="name">Price Estimation Email</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="subject">{{ object.company_id.name }} Price Estimate (Ref {{ object.name or 'n/a' }})</field>
+        <field name="use_default_to" eval="True"/>
+        <field name="description">Sent manually to the customer with the price estimation breakdown</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 14px;">
+                <!-- Latest price estimation of this opportunity (crm.price.estimation is ordered by id DESC) -->
+                <t t-set="estimation" t-value="object.env['crm.price.estimation'].search([('crm_lead_id', '=', object.id)], limit=1)"/>
+
+                <p style="margin-bottom: 15px;">Dear
+                    <t t-out="object.partner_id.name or 'Customer'"/>,
+                </p>
+                <p style="margin-bottom: 20px;">
+                    Please refer to the price estimate template below for your reference.
+                </p>
+
+                <h3 style="color: #2c3e50; margin-bottom: 10px; font-size: 16px;">Price Estimate</h3>
+
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; border: 1px solid #dddddd;">
+                    <tbody>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #dddddd; width: 30%; background-color: #f9f9f9;">
+                                <strong>Date:</strong>
+                            </td>
+                            <td style="padding: 8px; border: 1px solid #dddddd;">
+                                <t t-out="format_date(object.create_date) if object.create_date else ''"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #dddddd; background-color: #f9f9f9;">
+                                <strong>Customer Name:</strong>
+                            </td>
+                            <td style="padding: 8px; border: 1px solid #dddddd;">
+                                <t t-out="object.partner_id.name or 'N/A'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #dddddd; background-color: #f9f9f9;">
+                                <strong>Style Number:</strong>
+                            </td>
+                            <td style="padding: 8px; border: 1px solid #dddddd;">
+                                <t t-out="object.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #dddddd; background-color: #f9f9f9;">
+                                <strong>Style:</strong>
+                            </td>
+                            <td style="padding: 8px; border: 1px solid #dddddd;">
+                                <t t-out="object.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #dddddd; background-color: #f9f9f9;">
+                                <strong>Unit Price:</strong>
+                            </td>
+                            <td style="padding: 8px; border: 1px solid #dddddd;">
+                                $ <t t-out="'%.2f' % (estimation.total_price or 0.0)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #dddddd; background-color: #f9f9f9;">
+                                <strong>Type of Garment:</strong>
+                            </td>
+                            <td style="padding: 8px; border: 1px solid #dddddd;">
+                                <t t-out="object.type_of_wash_id.display_name or 'N/A'"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="color: #2c3e50; margin-bottom: 10px; font-size: 14px;">Process Breakdown</h4>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; border: 1px solid #dddddd;">
+                    <thead>
+                        <tr style="background-color: #f2f2f2;">
+                            <th style="padding: 8px; text-align: left; border: 1px solid #dddddd;">Process</th>
+                            <th style="padding: 8px; text-align: right; border: 1px solid #dddddd; width: 30%;">Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 8px; border: 1px solid #dddddd; font-weight: bold;">Wet Process</td>
+                            <td style="padding: 8px; text-align: right; border: 1px solid #dddddd; font-weight: bold;">
+                                $ <t t-out="'%.2f' % (estimation.wet_process_cost or 0.0)"/>
+                            </td>
+                        </tr>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 8px; border: 1px solid #dddddd; font-weight: bold;">Dry Process</td>
+                            <td style="padding: 8px; text-align: right; border: 1px solid #dddddd; font-weight: bold;">
+                                $ <t t-out="'%.2f' % sum(estimation.dry_process_line_ids.mapped('process_cost'))"/>
+                            </td>
+                        </tr>
+                        <t t-foreach="estimation.dry_process_line_ids" t-as="dry_line">
+                            <tr>
+                                <td style="padding: 5px 8px 5px 25px; border: 1px solid #dddddd; color: #555555; font-size: 12px;">
+                                    <t t-out="dry_line.process_id.display_name"/>
+                                </td>
+                                <td style="padding: 5px 8px; text-align: right; border: 1px solid #dddddd; color: #555555; font-size: 12px;">
+                                    $ <t t-out="'%.2f' % (dry_line.process_cost or 0.0)"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; border: 1px solid #dddddd;">
+                    <tbody>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #dddddd; width: 30%; background-color: #f9f9f9;">
+                                <strong>Production Capacity:</strong>
+                            </td>
+                            <td style="padding: 8px; border: 1px solid #dddddd;">
+                                <t t-out="estimation.production_capacity or 0"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 8px; border: 1px solid #dddddd; background-color: #f9f9f9;">
+                                <strong>Fallout:</strong>
+                            </td>
+                            <td style="padding: 8px; border: 1px solid #dddddd;">
+                                <t t-out="estimation.fallout or 0"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 style="color: #2c3e50; margin-bottom: 10px; font-size: 14px;">Terms &amp; Conditions</h4>
+                <ol style="margin-top: 0; padding-left: 20px; font-size: 12px; color: #555555; line-height: 1.5;">
+                    <li>The above prices are estimated based on the information currently available.</li>
+                    <li>Final prices will be confirmed after reviewing the actual garment, wash standard, and required process.</li>
+                    <li>Any additional or special processes will be charged separately.</li>
+                    <li>The stated production capacity is an estimated daily capacity and may vary depending on the garment/style.</li>
+                    <li>Fallout allowance will be applicable as indicated above.</li>
+                    <li>Prices are subject to final confirmation and approval.</li>
+                    <li>Validity of this estimate: 30 Days</li>
+                </ol>
+
+                <p style="font-size: 13px; margin-top: 30px;">
+                    --<br/>
+                    <t t-out="user.name"/>
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>

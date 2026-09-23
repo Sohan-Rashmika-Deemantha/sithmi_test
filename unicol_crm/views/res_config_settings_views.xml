@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_unicol_crm_res_config_settings" model="ir.ui.view">
+            <field name="name">unicol.crm.res.config.settings</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="crm.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//app[@name='crm']/block[1]" position="inside">
+                    <setting id="unicol_crm_email_templates_setting"
+                             string="CRM Email Templates"
+                             help="Enable and configure CRM email templates used when sending emails from opportunities.">
+                        <field name="enable_crm_email_templates"/>
+                        <div class="content-group" invisible="not enable_crm_email_templates">
+                            <div class="mt16">
+                                <label for="customer_breakdown_email_template_id" string="With Breakdown" class="o_light_label me-2"/>
+                                <field name="customer_breakdown_email_template_id" class="oe_inline"/>
+                            </div>
+                            <div class="mt8">
+                                <label for="customer_without_breakdown_email_template_id" string="Without Breakdown" class="o_light_label me-2"/>
+                                <field name="customer_without_breakdown_email_template_id" class="oe_inline"/>
+                            </div>
+                            <div class="text-muted mt8">
+                                Select the email templates for customer breakdown and customer without breakdown emails.
+                                The selected template is loaded when sending email from a CRM opportunity.
+                            </div>
+                        </div>
+                    </setting>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

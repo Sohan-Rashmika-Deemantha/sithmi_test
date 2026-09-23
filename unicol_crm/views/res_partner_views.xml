@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <record id="view_partner_form_inherit_unicol_buyer" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.unicol.buyer</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_type']" position="replace">
+                <div class="d-flex align-items-center gap-3">
+                    <field name="company_type" widget="radio" options="{'horizontal': true}"/>
+                    <field name="buyer" widget="radio" options="{'horizontal': true}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    </data>
+</odoo>

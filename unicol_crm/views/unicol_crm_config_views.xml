@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_unicol_crm_product_item_list" model="ir.ui.view">
+        <field name="name">unicol.crm.product.item.list</field>
+        <field name="model">unicol.crm.product.item</field>
+        <field name="arch" type="xml">
+            <list string="Product Items" editable="bottom">
+                <field name="name"/>
+                <field name="active" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_unicol_crm_product_item_form" model="ir.ui.view">
+        <field name="name">unicol.crm.product.item.form</field>
+        <field name="model">unicol.crm.product.item</field>
+        <field name="arch" type="xml">
+            <form string="Product Item">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_unicol_crm_product_item" model="ir.actions.act_window">
+        <field name="name">Product Items</field>
+        <field name="res_model">unicol.crm.product.item</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_unicol_crm_type_of_wash_list" model="ir.ui.view">
+        <field name="name">unicol.crm.type.of.wash.list</field>
+        <field name="model">unicol.crm.type.of.wash</field>
+        <field name="arch" type="xml">
+            <list string="Types of Wash" editable="bottom">
+                <field name="name"/>
+                <field name="active" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_unicol_crm_type_of_wash_form" model="ir.ui.view">
+        <field name="name">unicol.crm.type.of.wash.form</field>
+        <field name="model">unicol.crm.type.of.wash</field>
+        <field name="arch" type="xml">
+            <form string="Type of Wash">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_unicol_crm_type_of_wash" model="ir.actions.act_window">
+        <field name="name">Types of Wash</field>
+        <field name="res_model">unicol.crm.type.of.wash</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_unicol_crm_product_item"
+              name="Product Items"
+              parent="crm.crm_menu_config"
+              action="action_unicol_crm_product_item"
+              sequence="60"/>
+
+    <menuitem id="menu_unicol_crm_type_of_wash"
+              name="Types of Wash"
+              parent="crm.crm_menu_config"
+              action="action_unicol_crm_type_of_wash"
+              sequence="61"/>
+
+</odoo>
