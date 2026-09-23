@@ -1,0 +1,75 @@
+.o_unicol_image_row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+.o_unicol_avatar.oe_avatar,
+.o_unicol_image_row .oe_avatar {
+    width: 120px !important;
+    height: 120px !important;
+    max-width: 120px !important;
+    max-height: 120px !important;
+}
+
+.o_unicol_image_row .oe_avatar img {
+    width: 120px !important;
+    height: 120px !important;
+    object-fit: cover !important;
+    border-radius: 6px;
+    border: 1px solid #e0e0e0;
+    display: block;
+}
+.o_unicol_camera {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+    align-self: flex-end;
+}
+
+.o_unicol_camera i {
+    font-size: 18px;
+    color: #6c757d;
+}
+
+.o_unicol_camera:hover {
+    background: #e9ecef;
+}
+
+.o_unicol_kanban_lead_image {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 2px;
+    margin-left: 4px;
+}
+
+.o_unicol_kanban_lead_image img {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+    display: block;
+}
+
+.o_unicol_kanban_revenue_badge {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 0.75rem;
+    line-height: 1;
+    padding: 3px 6px;
+    border: 1px solid var(--border-color, #ced4da);
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-right: 2px;
+}
+.ms-auto.d-flex .ms-2 {
+    margin-left: 2px !important;
+}

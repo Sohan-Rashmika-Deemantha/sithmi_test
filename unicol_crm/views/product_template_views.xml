@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_product_template_form_unicol" model="ir.ui.view">
+        <field name="name">product.template.form.unicol</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='o_row'][field[@name='qty_available']]" position="after">
+                <label for="originating_lead_id" string="Lead"/>
+                <div class="o_row" name="originating_lead_div">
+                    <field name="originating_lead_id" class="oe_inline" style="width: 100%;"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//group[@name='extra_info']" position="inside">
+                <field name="buyer_id"/>
+                <field name="product_item_id"/>
+                <field name="type_of_wash_id"/>
+            </xpath>
+            <xpath expr="//field[@name='purchase_ok']" position="attributes">
+                <attribute name="readonly">originating_lead_id</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='taxes_id']/.." position="after">
+                <label for="tentative_price" invisible="type == 'combo'"/>
+                <div name="tentative_price_div" class="o_row" invisible="type == 'combo'">
+                    <field name="tentative_price" widget="monetary" class="oe_inline" options="{'currency_field': 'currency_id'}"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_template_form_uc_no" model="ir.ui.view">
+        <field name="name">product.template.form.uc.no</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="uc_no" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_product_template_kanban_uc_no" model="ir.ui.view">
+        <field name="name">product.template.product.kanban.uc.no</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="inside">
+                <field name="uc_no"/>
+            </xpath>
+            <xpath expr="//span[@t-if='record.default_code.value']" position="before">
+                <span t-if="record.uc_no.value">
+                    [<field name="uc_no"/>]
+                </span>
+            </xpath>
+        </field>
+    </record>
+</odoo>

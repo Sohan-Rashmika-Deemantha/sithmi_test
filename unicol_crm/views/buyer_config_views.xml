@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_unicol_crm_buyer_list" model="ir.ui.view">
+            <field name="name">res.partner.buyer.list</field>
+            <field name="model">res.partner</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <list string="Buyers">
+                    <field name="name"/>
+                    <field name="company_type"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="country_id"/>
+                    <field name="buyer"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_unicol_crm_buyer" model="ir.actions.act_window">
+            <field name="name">Buyers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_id" ref="view_unicol_crm_buyer_list"/>
+            <field name="domain">[('buyer', '=', 'buyer')]</field>
+            <field name="context">{'default_buyer': 'buyer'}</field>
+        </record>
+
+        <record id="menu_unicol_crm_buyer" model="ir.ui.menu">
+            <field name="name">Buyers</field>
+            <field name="parent_id" ref="crm.crm_menu_config"/>
+            <field name="action" ref="action_unicol_crm_buyer"/>
+            <field name="sequence">10</field>
+        </record>
+    </data>
+</odoo>

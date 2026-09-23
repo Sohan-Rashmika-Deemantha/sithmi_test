@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_unicol_crm_lead_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.form.unicol</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@class='oe_title mw-100']" position="before">
+                <div class="o_unicol_image_row float-end me-3">
+                    <field name="image" widget="image" class="oe_avatar o_unicol_avatar"
+                           options="{'preview_image': 'image', 'size': [120, 120]}"/>
+                    <div class="o_unicol_camera" title="Add/Change Image">
+                        <i class="fa fa-camera"/>
+                    </div>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_price_estimation" type="object"
+                        class="oe_stat_button" icon="fa-money"
+                        invisible="type != 'opportunity'">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Price Estimation</span>
+                        <field name="price_estimation_count" class="o_stat_value"/>
+                    </div>
+                </button>
+                <button name="action_create_product_template" type="object"
+                        class="oe_stat_button" icon="fa-cubes"
+                        string="Create Product"
+                        invisible="type != 'opportunity'"/>
+            </xpath>
+
+            <xpath expr="//header/field[@name='stage_id']" position="before">
+                <button name="action_send_email" type="object"
+                        string="Send Email" icon="fa-envelope"
+                        class="btn-secondary"/>
+            </xpath>
+
+            <xpath expr="//group[@name='lead_partner']/field[@name='partner_id']" position="after">
+                <field name="buyer_id"/>
+                <field name="crm_email_template_type"/>
+                <field name="product_item_id"/>
+                <field name="type_of_wash_id"/>
+                <field name="product_template_id" readonly="1"/>
+            </xpath>
+
+            <xpath expr="//group[@name='opportunity_partner']/field[@name='partner_id']" position="after">
+                <field name="buyer_id"/>
+                <field name="crm_email_template_type"/>
+                <field name="product_item_id"/>
+                <field name="type_of_wash_id"/>
+                <field name="product_template_id" readonly="1"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

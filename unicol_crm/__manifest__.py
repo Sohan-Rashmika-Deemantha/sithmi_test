@@ -1,0 +1,33 @@
+{
+    "name": "Unicol CRM",
+    "version": "19.0.1.0.0",
+    "summary": "Customer Relationship Management for Unicol",
+    "description": "Unicol CRM module for managing customer relationships and sales processes.",
+    "category": "Sales",
+    "author": "Core48",
+    "website": "https://www.core48.com",
+    "license": "LGPL-3",
+    "depends": ["crm", "stock", "product", "unicol_process_map","unicol_product_approval","unicol_inventory"],
+    "data": [
+        "security/ir.model.access.csv",
+        "data/product_template_sequence_data.xml",
+        "data/price_estimation_email_template.xml",
+        "data/buyer_email_templates.xml",
+        "views/res_partner_views.xml",
+        "views/buyer_config_views.xml",
+        "views/res_config_settings_views.xml",
+        "views/unicol_crm_config_views.xml",
+        "views/crm_lead_views.xml",
+        "views/crm_lead_kanban_views.xml",
+        "views/product_template_views.xml",
+        "views/price_estimation_views.xml",
+    ],
+    "assets": {
+        "web.assets_backend": [
+            "unicol_crm/static/src/css/crm_lead_image.css",
+        ],
+    },
+    "installable": True,
+    "application": False,
+    "auto_install": False,
+}

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_price_estimation_all_users,crm.price.estimation access for all users,model_crm_price_estimation,,1,1,1,1
+access_crm_price_estimation_wet_process_all_users,crm.price.estimation.wet.process access for all users,model_crm_price_estimation_wet_process,,1,1,1,1
+access_crm_price_estimation_dry_process_all_users,crm.price.estimation.dry.process access for all users,model_crm_price_estimation_dry_process,,1,1,1,1
+access_unicol_crm_product_item_user,unicol.crm.product.item.user,model_unicol_crm_product_item,base.group_user,1,1,1,1
+access_unicol_crm_type_of_wash_user,unicol.crm.type.of.wash.user,model_unicol_crm_type_of_wash,base.group_user,1,1,1,1

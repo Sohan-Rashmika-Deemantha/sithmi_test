@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Price Estimation List View -->
+    <record id="view_price_estimation_list" model="ir.ui.view">
+        <field name="name">crm.price.estimation.list</field>
+        <field name="model">crm.price.estimation</field>
+        <field name="arch" type="xml">
+            <list string="Price Estimations">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="fallout"/>
+                <field name="production_capacity"/>
+                <field name="total_price"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Price Estimation Form View -->
+    <record id="view_price_estimation_form" model="ir.ui.view">
+        <field name="name">crm.price.estimation.form</field>
+        <field name="model">crm.price.estimation</field>
+        <field name="arch" type="xml">
+            <form string="Price Estimation">
+                <header>
+                    <button name="action_set_draft" type="object" string="Reset to Draft" class="btn-secondary"
+                            invisible="state == 'draft'"/>
+                    <button name="action_set_approved" type="object" string="Approve" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_set_cancel" type="object" string="Cancel" class="btn-danger"
+                            invisible="state == 'cancel'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,cancel"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="fallout"/>
+                            <field name="production_capacity"/>
+                        </group>
+                        <group>
+                            <field name="total_price" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Wet Process">
+                            <group>
+                                <field name="wet_process_cost" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                        <page string="Dry Process">
+                            <field name="dry_process_line_ids">
+                                <list editable="bottom">
+                                    <field name="process_id"/>
+                                    <field name="process_cost"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_crm_price_estimation" model="ir.actions.act_window">
+        <field name="name">Price Estimations</field>
+        <field name="res_model">crm.price.estimation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
